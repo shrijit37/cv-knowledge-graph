@@ -1,0 +1,57 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix :     <http://cv-knowledge-graph.example/ontology#> .
+
+# ---------------------------------------------------------------------------
+# cv-knowledge-graph ontology (OWL)
+# A small, self-contained ontology for modelling the knowledge contained in
+# resumes/CVs: candidates, their roles, skills, projects, education, employers
+# and the evidence (provenance) behind every extracted statement.
+# ---------------------------------------------------------------------------
+
+: a owl:Ontology ;
+    rdfs:comment "Ontology for the cv-knowledge-graph project: models candidates, roles, skills, projects, education, employers and extraction provenance." .
+
+# ------------------------- classes -------------------------
+:Person            a owl:Class ; rdfs:subClassOf owl:Thing .
+:Candidate         a owl:Class ; rdfs:subClassOf :Person ;
+    rdfs:comment "A person whose resume/CV is represented in the graph." .
+:Skill             a owl:Class ; rdfs:comment "A technical or professional skill mentioned in a resume." .
+:Role              a owl:Class ; rdfs:comment "A job role held by a candidate (position at an employer), with start/end dates." .
+:Project           a owl:Class ; rdfs:comment "A project the candidate built or contributed to." .
+:Education         a owl:Class ; rdfs:comment "An educational qualification." .
+:Institution       a owl:Class ; rdfs:comment "A university, college, institute, or other educational body." .
+:Employer          a owl:Class ; rdfs:comment "A company or organisation a candidate worked for." .
+:Evidence          a owl:Class ; rdfs:comment "Provenance record: which source document, at what time, produced a statement." .
+
+# ------------------------- object properties -------------------------
+:hasName            a owl:ObjectProperty ; rdfs:domain :Person ; rdfs:range :Evidence .
+:hasSkill           a owl:ObjectProperty ; rdfs:domain :Person ; rdfs:range :Skill .
+:usesSkill          a owl:ObjectProperty ; rdfs:domain :Role ; rdfs:range :Skill .
+:projectUsesSkill   a owl:ObjectProperty ; rdfs:domain :Project ; rdfs:range :Skill .
+:heldRole           a owl:ObjectProperty ; rdfs:domain :Person ; rdfs:range :Role .
+:employer           a owl:ObjectProperty ; rdfs:domain :Role ; rdfs:range :Employer .
+:projectOf          a owl:ObjectProperty ; rdfs:domain :Project ; rdfs:range :Candidate .
+:degree             a owl:ObjectProperty ; rdfs:domain :Education ; rdfs:range :Institution .
+:educatedAt         a owl:ObjectProperty ; rdfs:domain :Person ; rdfs:range :Education .
+:roleEvidence       a owl:ObjectProperty ; rdfs:domain :Role ; rdfs:range :Evidence .
+:skillEvidence      a owl:ObjectProperty ; rdfs:domain :Skill ; rdfs:range :Evidence .
+:projectEvidence    a owl:ObjectProperty ; rdfs:domain :Project ; rdfs:range :Evidence .
+
+# ------------------------- datatype properties -------------------------
+:fullName        a owl:DatatypeProperty ; rdfs:domain :Person ; rdfs:range xsd:string .
+:email           a owl:DatatypeProperty ; rdfs:domain :Person ; rdfs:range xsd:string .
+:title           a owl:DatatypeProperty ; rdfs:domain :Role ; rdfs:range xsd:string .
+:startDate       a owl:DatatypeProperty ; rdfs:domain :Role ; rdfs:range xsd:gYearMonth .
+:endDate         a owl:DatatypeProperty ; rdfs:domain :Role ; rdfs:range xsd:gYearMonth .
+:hasLabel        a owl:DatatypeProperty ; rdfs:domain :Skill ; rdfs:range xsd:string .
+:description     a owl:DatatypeProperty ; rdfs:domain :Project ; rdfs:range xsd:string .
+:proficiency     a owl:DatatypeProperty ; rdfs:domain :Skill ; rdfs:range xsd:string .
+:sourceFile      a owl:DatatypeProperty ; rdfs:domain :Evidence ; rdfs:range xsd:string .
+:extractedAt     a owl:DatatypeProperty ; rdfs:domain :Evidence ; rdfs:range xsd:dateTime .
+:extractorModel  a owl:DatatypeProperty ; rdfs:domain :Evidence ; rdfs:range xsd:string .
+:degreeName      a owl:DatatypeProperty ; rdfs:domain :Education ; rdfs:range xsd:string .
+:field           a owl:DatatypeProperty ; rdfs:domain :Education ; rdfs:range xsd:string .
+:graduatedAt     a owl:DatatypeProperty ; rdfs:domain :Education ; rdfs:range xsd:gYear .

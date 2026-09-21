@@ -1,0 +1,20 @@
+Shrijit Srivastav
+shrijit.work7@gmail.com
+
+AI Integration Engineer - RapidData.io | Jul 2025 - Dec 2025
+Built LLM resume-processing pipelines with Python and TypeScript.
+Designed structured data pipelines and ATS integrations.
+
+Full Stack Engineer - Delta | May 2024 - Jun 2025
+Built responsive user interfaces with React.js and TypeScript.
+Architected and maintained REST APIs in Node.js.
+
+Database Intern - Parsvnath Developers | Apr 2023 - Jul 2023
+Optimized SQL queries for real-time reporting dashboards.
+
+Project - cv-knowledge-graph
+Technologies: Python, RDF, GraphRAG
+Built an RDF knowledge graph pipeline for resumes.
+
+Education
+B.Tech Electronics & Communication Engineering, Jaypee Institute of Information Technology (2024)

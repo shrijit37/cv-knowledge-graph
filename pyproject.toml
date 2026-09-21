@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cv-knowledge-graph"
+version = "0.1.0"
+description = "Build an RDF knowledge graph from CVs/resumes via LLM extraction, with SPARQL and GraphRAG retrieval."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "rdflib>=7.0",
+    "pypdf>=4.0",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+openai = ["openai>=1.0"]
+ocr = ["pytesseract>=0.3", "Pillow>=10.0", "PyMuPDF>=1.24"]
+rag = ["numpy>=1.24", "sentence-transformers>=2.2"]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+cvkg = "cvkg.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["cvkg*"]

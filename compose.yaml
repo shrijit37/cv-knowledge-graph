@@ -1,0 +1,40 @@
+# Load the graph into a standards-compliant RDF store and query it with SPARQL.
+#
+# Usage:
+#   docker compose up -d   # starts Jena Fuseki on http://localhost:3030
+#   docker compose run --rm load   # loads graph.ttl into the /cvkg dataset
+#
+# Then query at http://localhost:3030/#/dataset/cvkg/query with any SPARQL
+# from cvkg.query (or the `ask` CLI).
+
+services:
+  fuseki:
+    image: ghcr.io/stain/jena-fuseki:5.0.0
+    container_name: cvkg-fuseki
+    environment:
+      ADMIN_PASSWORD: "admin" # dev only; override in production
+      ENABLE_DATA_WRITE: "true"
+      ENABLE_UPDATE: "true"
+    ports:
+      - "3030:3030"
+    volumes:
+      - fuseki-data:/fuseki
+
+  load:
+    image: ghcr.io/stain/jena-fuseki:5.0.0
+    profiles: ["tools"]
+    depends_on:
+      - fuseki
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        sleep 5
+        curl -fsS -u admin:admin \
+          -X POST \
+          -H "Content-Type: text/turtle" \
+          --data-binary @/data/graph.ttl \
+          http://fuseki:3030/cvkg/data
+        echo "Loaded graph into http://localhost:3030/cvkg"
+
+volumes:
+  fuseki-data:
